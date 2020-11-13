@@ -1,12 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv/config');
 
 const app = express();
 
+// Import Routes
+const authRoute = require('./routes/auth');
+
 // Middlewares
 app.use(cors());
+app.options('*', cors());
+app.use(bodyParser.json());
+
+// Route Middlewares
+app.use('/HealthWorker', authRoute)
 
 // Routes
 app.get('/', (req, res) => {
