@@ -2,11 +2,13 @@ package com.example.binidro.views.main.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,11 +21,12 @@ import com.example.binidro.models.HealthWorker;
 import com.example.binidro.models.Patient;
 import com.example.binidro.models.Sensor;
 import com.example.binidro.models.Ward;
+import com.example.binidro.views.main.adapters.WardsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WardsFragment extends Fragment implements WardsAdapter.OnWordClickListener, View.OnClickListener{
+public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickListener, View.OnClickListener{
     private EditText searchEditText;
     private ImageButton sortImageButton;
 
@@ -31,14 +34,14 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWordClickL
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager recyclerViewLayoutManager;
 
-    private ArrayList sensors;
-    private ArrayList patients;
-    private ArrayList healthWorkers;
-    private ArrayList wards;
-
+    private ArrayList<Sensor> sensors;
+    private ArrayList<Patient> patients;
+    private ArrayList<HealthWorker> healthWorkers;
+    private ArrayList<Ward> wards;
 
     public WardsFragment() {
         // Required empty public constructor
+        // TODO - Fetch Data
         sensors = new ArrayList<Sensor>();
         sensors.add(new Sensor("1", "hello"));
         sensors.add(new Sensor("2", "hell2"));
@@ -54,6 +57,7 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWordClickL
         wards = new ArrayList<Ward>();
         wards.add(new Ward("1", patients, healthWorkers));
         wards.add(new Ward("1", patients, healthWorkers));
+
     }
 
     @Override
@@ -76,6 +80,13 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWordClickL
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 0));
         wardsAdapter = new WardsAdapter(wards, getContext(), this);
         recyclerView.setAdapter(wardsAdapter);
+    }
+
+
+    public void showToast(String message){
+        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override
