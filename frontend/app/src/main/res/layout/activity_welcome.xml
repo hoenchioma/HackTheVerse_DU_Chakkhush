@@ -16,6 +16,8 @@ tools:context=".views.welcome.WelcomeActivity">
     android:textColor="@color/colorAccent"
     android:textStyle="normal"
     android:textSize="48sp"
+    android:letterSpacing="0.1"
+    android:fontFamily="@font/vag_rounded_bold"
     android:gravity="center"/>
 
 </LinearLayout>

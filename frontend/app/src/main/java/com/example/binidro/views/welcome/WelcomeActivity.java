@@ -24,7 +24,6 @@ public class WelcomeActivity extends AppCompatActivity {
         setAnimation();
     }
 
-
     void setAnimation(){
         appTitle = (TextView) findViewById(R.id.appTitle);
         Animation zoomIn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in);
