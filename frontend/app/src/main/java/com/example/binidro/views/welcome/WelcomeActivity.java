@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.binidro.R;
+import com.example.binidro.views.auth.AuthActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
