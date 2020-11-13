@@ -1,11 +1,13 @@
 package com.example.binidro.models;
 
+import java.util.ArrayList;
+
 public class Ward {
     private String id;
-    private Patient patients[];
-    private HealthWorker healthWorkers[];
+    private ArrayList<Patient> patients;
+    private ArrayList<HealthWorker> healthWorkers;
 
-    public Ward(String id, Patient[] patients, HealthWorker[] healthWorkers) {
+    public Ward(String id, ArrayList<Patient> patients, ArrayList<HealthWorker> healthWorkers) {
         this.id = id;
         this.patients = patients;
         this.healthWorkers = healthWorkers;
@@ -19,19 +21,19 @@ public class Ward {
         this.id = id;
     }
 
-    public Patient[] getPatients() {
+    public ArrayList<Patient> getPatients() {
         return patients;
     }
 
-    public void setPatients(Patient[] patients) {
+    public void setPatients(ArrayList<Patient> patients) {
         this.patients = patients;
     }
 
-    public HealthWorker[] getHealthWorkers() {
+    public ArrayList<HealthWorker> getHealthWorkers() {
         return healthWorkers;
     }
 
-    public void setHealthWorkers(HealthWorker[] healthWorkers) {
+    public void setHealthWorkers(ArrayList<HealthWorker> healthWorkers) {
         this.healthWorkers = healthWorkers;
     }
 }

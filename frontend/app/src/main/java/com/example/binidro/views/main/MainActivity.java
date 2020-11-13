@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.binidro.R;
 import com.example.binidro.models.Ward;
+import com.example.binidro.views.main.fragments.WardsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        profileNameTextView.setText(CONSTANTS.getCurrentUser().getProperty("name").toString());
 //        profileEmailTextView.setText(CONSTANTS.getCurrentUser().getEmail());
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerMain, new Wards()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerMain, new WardsFragment()).commit();
     }
 
     private void updateNavigationView(){

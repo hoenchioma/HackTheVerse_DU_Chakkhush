@@ -1,13 +1,15 @@
 package com.example.binidro.models;
 
+import java.util.ArrayList;
+
 public class Patient {
     private String id;
     private String name;
     private String disease;
     private String imageUrl;
-    private Sensor sensors[];
+    private ArrayList<Sensor> sensors;
 
-    public Patient(String id, String name, String disease, String imageUrl, Sensor[] sensors) {
+    public Patient(String id, String name, String disease, String imageUrl, ArrayList<Sensor> sensors) {
         this.id = id;
         this.name = name;
         this.disease = disease;
@@ -47,11 +49,11 @@ public class Patient {
         this.imageUrl = imageUrl;
     }
 
-    public Sensor[] getSensors() {
+    public ArrayList<Sensor> getSensors() {
         return sensors;
     }
 
-    public void setSensors(Sensor[] sensors) {
+    public void setSensors(ArrayList<Sensor> sensors) {
         this.sensors = sensors;
     }
 }
