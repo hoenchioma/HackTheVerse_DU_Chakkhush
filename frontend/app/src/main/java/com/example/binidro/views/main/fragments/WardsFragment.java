@@ -116,7 +116,7 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
     }
 
     private void updateNavigationView(){
-        navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(true);
+        navigationView.getMenu().findItem(R.id.notificationsDrawerMenu).setChecked(true);
         navigationView.getMenu().findItem(R.id.aboutUsDrawerMenu).setChecked(false);
         navigationView.getMenu().findItem(R.id.signOutDrawerMenu).setChecked(false);
     }

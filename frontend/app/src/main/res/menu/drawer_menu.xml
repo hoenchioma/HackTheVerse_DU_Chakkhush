@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/top_drawer">
         <item
-            android:id="@+id/wardsDrawerMenu"
+            android:id="@+id/notificationsDrawerMenu"
             android:icon="@drawable/ic_home"
-            android:title="Wards"/>
+            android:title="Notifications"/>
     </group>
 
     <group android:id="@+id/middle_drawer">

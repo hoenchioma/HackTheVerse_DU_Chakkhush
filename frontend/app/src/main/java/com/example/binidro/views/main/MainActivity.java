@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +23,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
 import com.example.binidro.R;
+import com.example.binidro.models.Patient;
 import com.example.binidro.models.Ward;
 import com.example.binidro.views.auth.fragments.ForgotPasswordFragment;
 import com.example.binidro.views.auth.fragments.SignInFragment;
@@ -35,8 +38,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private Boolean doubleBackToExitPressedOnce = false;
@@ -51,15 +63,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ActionBarDrawerToggle drawerToggle;
 
+    private JSONObject user = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String userDetails;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                userDetails= null;
+            } else {
+                userDetails= extras.getString("userDetails");
+            }
+        } else {
+            userDetails= (String) savedInstanceState.getSerializable("userDetails");
+        }
+
+        try {
+            user = new JSONObject(userDetails);
+        } catch (Throwable t) {
+            Log.e("My App", "Could not parse malformed JSON: \"" + user + "\"");
+        }
+
         findXmlElements();
         setUpListeners();
         initializeUI();
         initializeFcm();
+        initializeAndroidNetworkingLibrary();
     }
 
     public void findXmlElements(){
@@ -85,13 +119,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void initializeUI(){
         updateNavigationView();
-        navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(true);
 
         // TODO - Set User Details
 //        profileNameTextView.setText(CONSTANTS.getCurrentUser().getProperty("name").toString());
 //        profileEmailTextView.setText(CONSTANTS.getCurrentUser().getEmail());
 
-        openWards();
+        String wardId = null;
+        try {
+           wardId = user.getString("ward");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        openPatients(wardId);
     }
 
     public void initializeFcm(){
@@ -107,6 +146,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
+    public void initializeAndroidNetworkingLibrary() {
+        // Adding an Network Interceptor for Debugging purpose :
+        AndroidNetworking.initialize(getApplicationContext());
+    }
+
     public void openWards(){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
@@ -114,9 +158,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.commit();
     }
 
+    public void openPatients(String wardId){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+        fragmentTransaction.replace(R.id.fragmentContainerMain, new PatientsFragment(wardId), "patients");
+        fragmentTransaction.commit();
+    }
 
     private void updateNavigationView(){
-        navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(false);
+        navigationView.getMenu().findItem(R.id.notificationsDrawerMenu).setChecked(false);
         navigationView.getMenu().findItem(R.id.aboutUsDrawerMenu).setChecked(false);
         navigationView.getMenu().findItem(R.id.signOutDrawerMenu).setChecked(false);
     }
@@ -159,15 +209,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
-        if (id == R.id.wardsDrawerMenu) {
+        if (id == R.id.notificationsDrawerMenu) {
             updateNavigationView();
-            navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(true);
-            openWards();
+
         } else if (id == R.id.aboutUsDrawerMenu) {
             updateNavigationView();
             navigationView.getMenu().findItem(R.id.aboutUsDrawerMenu).setChecked(true);
-//            Intent intent = new Intent(getApplicationContext(), RequestBookActivity.class);
-//            startActivity(intent);
         } else if (id == R.id.signOutDrawerMenu) {
             updateNavigationView();
             navigationView.getMenu().findItem(R.id.signOutDrawerMenu).setChecked(true);
@@ -203,7 +250,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(fragmentName.equals("wards")) {
                 fragmentTitle.setText("Wards");
                 updateNavigationView();
-                navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(true);
             } else if(fragmentName.equals("patients")) {
                 fragmentTitle.setText("Patients");
                 updateNavigationView();

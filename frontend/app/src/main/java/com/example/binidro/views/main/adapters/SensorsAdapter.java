@@ -19,13 +19,16 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.SensorItemViewHolder> {
     private Context context;
     private List<Sensor> sensors;
     private OnSensorClickListener mOnSensorClickListener;
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -78,12 +81,23 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.SensorIt
         // - replace the contents of the view with that element
         String name = sensors.get(position).getName();
 //        String measurement = sensors.get(position).getValues().get(0);
-        String measurement = "100%";
+        Random r = new Random();
+        double randomValue = 0 + (100 - 0) * r.nextDouble();
+        String measurement = Double.toString(Double.parseDouble(df2.format(randomValue)));
+        String unit = null;
+
+        if(name.equals("BP")) {
+            unit = "mmHg";
+        } else if(name.equals("SPO2")) {
+            unit = "%";
+        } else if(name.equals("Pulse")) {
+            unit = "bps";
+        }
 
         holder.sensorName.setText(name);
         holder.sensorMeasurement.setText(measurement);
 
-        LineDataSet lineDataSet = new LineDataSet(lineChartDataSet(),"bps");
+        LineDataSet lineDataSet = new LineDataSet(lineChartDataSet(unit), unit);
         ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
 
@@ -134,18 +148,41 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.SensorIt
         void onSensorClick(int position);
     }
 
-    private ArrayList<Entry> lineChartDataSet(){
+    private ArrayList<Entry> lineChartDataSet(String unit){
         ArrayList<Entry> dataSet = new ArrayList<Entry>();
 
-        dataSet.add(new Entry(0,40));
-        dataSet.add(new Entry(1,10));
-        dataSet.add(new Entry(2,15));
-        dataSet.add(new Entry(3,12));
-        dataSet.add(new Entry(4,20));
-        dataSet.add(new Entry(5,50));
-        dataSet.add(new Entry(6,23));
-        dataSet.add(new Entry(7,34));
-        dataSet.add(new Entry(8,12));
+        if(unit.equals("mmHg")) {
+            dataSet.add(new Entry(80,120));
+            dataSet.add(new Entry(1,10));
+            dataSet.add(new Entry(75,120));
+            dataSet.add(new Entry(80,125));
+            dataSet.add(new Entry(70,110));
+            dataSet.add(new Entry(80,120));
+            dataSet.add(new Entry(82,120));
+            dataSet.add(new Entry(83,119));
+            dataSet.add(new Entry(85,115));
+        } else if(unit.equals("%")) {
+            dataSet.add(new Entry(2,96));
+            dataSet.add(new Entry(3, 96));
+            dataSet.add(new Entry(4, 96));
+            dataSet.add(new Entry(5, 96));
+            dataSet.add(new Entry(6, 95));
+            dataSet.add(new Entry(7, 97));
+            dataSet.add(new Entry(8, 97));
+            dataSet.add(new Entry(9, 97));
+            dataSet.add(new Entry(10, 96));
+        } else if(unit.equals("bps")) {
+            dataSet.add(new Entry(2, 70));
+            dataSet.add(new Entry(3, 72));
+            dataSet.add(new Entry(4, 75));
+            dataSet.add(new Entry(5, 78));
+            dataSet.add(new Entry(6, 75));
+            dataSet.add(new Entry(7, 74));
+            dataSet.add(new Entry(8, 73));
+            dataSet.add(new Entry(9, 73));
+            dataSet.add(new Entry(10, 72));
+        }
+
         return  dataSet;
     }
 }

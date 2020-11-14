@@ -9,10 +9,14 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
 import com.example.binidro.R;
 import com.example.binidro.views.auth.fragments.ForgotPasswordFragment;
 import com.example.binidro.views.auth.fragments.SignInFragment;
 import com.example.binidro.views.auth.fragments.SignUpFragment;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
+import okhttp3.OkHttpClient;
 
 public class AuthActivity extends AppCompatActivity implements View.OnClickListener {
     private Boolean doubleBackToExitPressedOnce = false;
@@ -25,6 +29,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         findXmlElements();
         setUpListeners();
         openSignIn();
+        initializeAndroidNetworkingLibrary();
     }
 
     public void findXmlElements(){
@@ -41,6 +46,13 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         formTransaction.commit();
     }
 
+    public void initializeAndroidNetworkingLibrary() {
+        // Adding an Network Interceptor for Debugging purpose :
+        OkHttpClient okHttpClient = new OkHttpClient() .newBuilder()
+                .addNetworkInterceptor(new StethoInterceptor())
+                .build();
+        AndroidNetworking.initialize(getApplicationContext());
+    }
 
     @Override
     public void onClick(View view) {
