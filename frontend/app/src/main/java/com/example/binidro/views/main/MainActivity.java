@@ -161,8 +161,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
         if (count == 0) {
-            super.onBackPressed();
-            //additional code
+            if(!doubleBackToExitPressedOnce) {
+                this.doubleBackToExitPressedOnce = true;
+                showToast("Press Once Again to EXIT");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce=false;
+                    }
+                }, 2000);
+            }
+            else {
+                Intent a = new Intent(Intent.ACTION_MAIN);
+                a.addCategory(Intent.CATEGORY_HOME);
+                a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(a);
+            }
         } else {
             getSupportFragmentManager().popBackStack();
         }
