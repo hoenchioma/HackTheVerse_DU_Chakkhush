@@ -1,6 +1,8 @@
 const kafka = require('kafka-node');
 const bp = require('body-parser');
 
+const checkUrgent = require('./classifier');
+
 const kafkaServer = process.env.KAFKA_SERVER;
 const kafkaTopic = process.env.KAFKA_TOPIC;
 
@@ -27,6 +29,9 @@ class Queue {
   }
   isEmpty() {
     return this.items.length == 0;
+  }
+  toArray() {
+    return this.items;
   }
 }
 
@@ -62,7 +67,7 @@ module.exports = {
 
       consumer.on('message', function (message) {
         const data = JSON.parse(message.value);
-        // TODO: do stuff with consumed data
+        checkUrgent(data);
         addData(data);
         console.log(message);
       });
@@ -88,5 +93,6 @@ module.exports = {
     catch (e) {
       console.log(e);
     }
-  }
+  },
+  sensorData
 }

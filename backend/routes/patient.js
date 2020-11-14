@@ -1,6 +1,9 @@
 const router = require('express').Router();
 
 const Patient = require('../models/Patient');
+const sensorData = require('../modules/kafka-consumer').sensorData;
+
+const typesOfSensors = ['spo2', 'bp', 'heartRate'];
 
 /** 
  * Confirm via confirmation link
@@ -13,6 +16,26 @@ router.get('/', async (req, res) => {
         res.send(patients);
     } catch(err) {
         console.log(err)
+        return res.status(400).send(err);
+    }
+})
+
+/** 
+ * Get individual patient sensor data
+ * URL Parameters: PatientID
+ * */
+router.get('/:patientId', async (req, res) => {
+    let output = {}
+    try{
+        typesOfSensors.forEach(type => {
+            const queue = sensorData.get([patientId, type]);
+            if(queue){
+                output[type] = queue.toArray();
+            }
+        });
+        res.send(output);
+    } catch(err) {
+        console.log(err);
         return res.status(400).send(err);
     }
 })

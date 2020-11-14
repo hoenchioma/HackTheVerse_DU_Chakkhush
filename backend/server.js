@@ -10,6 +10,13 @@ const app = express();
 const authRoute = require('./routes/auth');
 const patientRoute = require('./routes/patient');
 
+const notification_options = {
+    priority: "high",
+    timeToLive: 60 * 60 * 24
+};
+
+
+
 // Middlewares
 app.use(cors());
 app.options('*', cors());
@@ -34,7 +41,7 @@ mongoose.connect(process.env.DB_CONNECT,{
 () => console.log("Connected to DB"));
 
 
-const { setupConsumer } = require('./kafka-consumer');
+const { setupConsumer } = require('./modules/kafka-consumer');
 // setup kafka consumer
 setupConsumer();
 
