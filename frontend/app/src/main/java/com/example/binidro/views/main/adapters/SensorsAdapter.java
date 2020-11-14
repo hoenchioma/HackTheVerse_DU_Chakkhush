@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -27,6 +28,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.SensorIt
     private Context context;
     private List<Sensor> sensors;
     private OnSensorClickListener mOnSensorClickListener;
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -81,7 +83,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.SensorIt
 //        String measurement = sensors.get(position).getValues().get(0);
         Random r = new Random();
         double randomValue = 0 + (100 - 0) * r.nextDouble();
-        String measurement = Double.toString(randomValue);
+        String measurement = Double.toString(Double.parseDouble(df2.format(randomValue)));
         String unit = null;
 
         if(name.equals("BP")) {
