@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.binidro.R;
 import com.example.binidro.models.Patient;
 import com.example.binidro.models.Sensor;
+import com.example.binidro.views.main.adapters.PatientsAdapter;
 import com.example.binidro.views.main.adapters.WardsAdapter;
 
 import java.util.ArrayList;
