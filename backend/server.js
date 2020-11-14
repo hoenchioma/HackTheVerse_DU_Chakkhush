@@ -15,7 +15,7 @@ app.options('*', cors());
 app.use(bodyParser.json());
 
 // Route Middlewares
-app.use('/HealthWorker', authRoute)
+app.use('/healthworker', authRoute)
 
 // Routes
 app.get('/', (req, res) => {

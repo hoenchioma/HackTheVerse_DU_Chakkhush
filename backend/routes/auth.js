@@ -34,7 +34,7 @@ const frontendUrl = 'http://localhost:3000/';
 // Route: /HealthWorker
 router.get('/', async (req, res) => {
     try{
-
+        res.send("Auth working");
     } catch(err) {
         console.log(err)
         return res.status(400).send(err);
@@ -146,7 +146,7 @@ router.post('/resetpassword/:token', async (req, res) => {
 /** 
  * Reset password using onetime token
  * Query Parameters:
- * Body: email
+ * Body: name, email, password, phone, 
  * */
 router.post('/register', async (req, res) => {
     // Validation
@@ -168,8 +168,8 @@ router.post('/register', async (req, res) => {
         password: hashedPassword,
         phone: req.body.phone,
         confirmed: false,
-        type: healthWorker.type,
-        ward: healthWorker.ward
+        type: req.body.type,
+        ward: req.body.ward
     })
     try {
         const savedHealthWorker = await healthWorker.save();
