@@ -1,6 +1,7 @@
 const express = require('express')
 const cron = require('node-cron')
 const config = require('./config');
+const { generateRandomData } = require('./data-gen');
 const { pushEvent } = require('./kafka-producer');
 
 const HOST = config.host
@@ -13,10 +14,6 @@ app.listen(PORT, HOST, () => {
 })
 
 cron.schedule("*/5 * * * * *", function () {
-  pushEvent([{
-    type: 'spo2',
-    value: Math.random() * 100,
-    time: Date.now()
-  }]);
-  console.log('pushed event');
+  pushEvent([generateRandomData()]);
+  // console.log('pushed event');
 });
