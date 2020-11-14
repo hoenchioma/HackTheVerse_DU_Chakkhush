@@ -77,7 +77,7 @@ $(function () {
 	});
 
 	google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChart);
   
         function drawChart() {
   
@@ -95,5 +95,25 @@ $(function () {
           var chart = new google.visualization.PieChart(document.getElementById('piechart'));
   
           chart.draw(data, options);
-        }
+		}
+		google.charts.setOnLoadCallback(drawLineChart);
+		function drawLineChart() {
+			var data = google.visualization.arrayToDataTable([
+			  ['Days', 'Temperature'],
+			  ['1',  99],
+			  ['2',  100],
+			  ['3',  101],
+			  ['4',  100]
+			]);
+	
+			var options = {
+			  title: 'Patient Body Temp',
+			  curveType: 'function',
+			  legend: { position: 'bottom' }
+			};
+	
+			var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+	
+			chart.draw(data, options);
+		  }
 });
