@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "410213061428",
+    "firebase_url": "https://binidro-2bdf1.firebaseio.com",
+    "project_id": "binidro-2bdf1",
+    "storage_bucket": "binidro-2bdf1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410213061428:android:4b2fb52df4c7f6e227cb61",
+        "android_client_info": {
+          "package_name": "com.example.binidro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410213061428-kc41af662hsisqfgb2bo8j7r6kf948a3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG5Q9UVXLAYFH0PfEQnqk4RVET0CfYu4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410213061428-kc41af662hsisqfgb2bo8j7r6kf948a3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
