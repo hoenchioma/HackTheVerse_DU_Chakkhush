@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.binidro.R;
-import com.example.binidro.views.auth.fragment.ForgotPasswordFragment;
-import com.example.binidro.views.auth.fragment.SignInFragment;
-import com.example.binidro.views.auth.fragment.SignUpFragment;
+import com.example.binidro.views.auth.fragments.ForgotPasswordFragment;
+import com.example.binidro.views.auth.fragments.SignInFragment;
+import com.example.binidro.views.auth.fragments.SignUpFragment;
 
 public class AuthActivity extends AppCompatActivity implements View.OnClickListener {
     private Boolean doubleBackToExitPressedOnce = false;
@@ -22,12 +22,12 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        findViews();
+        findXmlElements();
         setUpListeners();
         openSignIn();
     }
 
-    public void findViews(){
+    public void findXmlElements(){
 
     }
 
@@ -76,7 +76,6 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
             fragmentTransaction.replace(R.id.fragmentContainerAuth, new SignInFragment(), "signIn");
             fragmentTransaction.commit();
         }
-
 
         ForgotPasswordFragment forgotPasswordFragment = (ForgotPasswordFragment) getSupportFragmentManager().findFragmentByTag("forgotPassword");
         if (forgotPasswordFragment != null && forgotPasswordFragment.isVisible()) {
