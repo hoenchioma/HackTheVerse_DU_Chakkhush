@@ -1,10 +1,8 @@
 const { v4: uuidv4 } = require('uuid');
 
 const PATIENT_NO = 1e4;
-const ZONE_NO = 1e3;
 
 const patients = Array(PATIENT_NO).keys().map(() => uuidv4());
-const zones = Array(ZONE_NO).keys().map(() => uuidv4());
 const types = ['spo2', 'bp', 'heartRate'];
 
 /**
@@ -42,7 +40,6 @@ module.exports = {
     const type = types[getRandomInt(0, types.length)];
     return {
       patientId: patients[getRandomInt(0, PATIENT_NO)],
-      zoneId: zones[getRandomInt(0, ZONE_NO)],
       type, 
       value: generateValue(type),
       time: Date.now()
