@@ -78,8 +78,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
 
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         }
     }

@@ -29,11 +29,15 @@ public class PatientsFragment extends Fragment implements PatientsAdapter.OnPati
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager recyclerViewLayoutManager;
 
+    private String wordId;
     private ArrayList<Sensor> sensors;
     private ArrayList<Patient> patients;
 
-    public PatientsFragment() {
+    public PatientsFragment(String wordId) {
         // Required empty public constructor
+
+        this.wordId = wordId;
+
         // TODO - Fetch Data
         sensors = new ArrayList<Sensor>();
         sensors.add(new Sensor("1", "hello"));
@@ -50,6 +54,7 @@ public class PatientsFragment extends Fragment implements PatientsAdapter.OnPati
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_patients, container, false);
 
+        showToast(wordId);
         findXmlElements(view);
         setUpRecyclerView();
         return view;

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,7 +55,7 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
 
         wards = new ArrayList<Ward>();
         wards.add(new Ward("1", patients, healthWorkers));
-        wards.add(new Ward("1", patients, healthWorkers));
+        wards.add(new Ward("2", patients, healthWorkers));
     }
 
     @Override
@@ -79,6 +80,11 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
         recyclerView.setAdapter(wardsAdapter);
     }
 
+    private void openPatients(String wardId) {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+        fragmentTransaction.replace(R.id.fragmentContainerMain, new PatientsFragment(wardId)).addToBackStack("patients").commit();
+    }
 
     public void showToast(String message){
         Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
@@ -88,9 +94,8 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
 
     @Override
     public void onWardClick(int position) {
-//        Intent intent = new Intent(getContext(), BookDetailsActivity.class);
-//        intent.putExtra("selectedBook", CONSTANTS.bookListCached.get(position));
-//        startActivityForResult(intent, CONSTANTS.getIdBooklistadminBookdetails());
+        String wardId = wards.get(position).getId();
+        openPatients(wardId);
     }
 
     @Override

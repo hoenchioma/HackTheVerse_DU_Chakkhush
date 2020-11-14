@@ -22,12 +22,12 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        findViews();
+        findXmlElements();
         setUpListeners();
         openSignIn();
     }
 
-    public void findViews(){
+    public void findXmlElements(){
 
     }
 
@@ -76,7 +76,6 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
             fragmentTransaction.replace(R.id.fragmentContainerAuth, new SignInFragment(), "signIn");
             fragmentTransaction.commit();
         }
-
 
         ForgotPasswordFragment forgotPasswordFragment = (ForgotPasswordFragment) getSupportFragmentManager().findFragmentByTag("forgotPassword");
         if (forgotPasswordFragment != null && forgotPasswordFragment.isVisible()) {

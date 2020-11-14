@@ -7,11 +7,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,11 +24,17 @@ import android.widget.Toast;
 
 import com.example.binidro.R;
 import com.example.binidro.models.Ward;
+import com.example.binidro.views.auth.fragments.ForgotPasswordFragment;
+import com.example.binidro.views.auth.fragments.SignInFragment;
+import com.example.binidro.views.auth.fragments.SignUpFragment;
+import com.example.binidro.views.main.fragments.PatientsFragment;
 import com.example.binidro.views.main.fragments.WardsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+    private Boolean doubleBackToExitPressedOnce = false;
+
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private Button menuButton;
@@ -75,8 +83,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        profileNameTextView.setText(CONSTANTS.getCurrentUser().getProperty("name").toString());
 //        profileEmailTextView.setText(CONSTANTS.getCurrentUser().getEmail());
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerMain, new WardsFragment()).commit();
+        openWards();
     }
+
+    public void openWards(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+        fragmentTransaction.replace(R.id.fragmentContainerMain, new WardsFragment(), "wards");
+        fragmentTransaction.commit();
+    }
+
 
     private void updateNavigationView(){
         navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(false);
@@ -125,8 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.wardsDrawerMenu) {
             updateNavigationView();
             navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(true);
-//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//            startActivity(intent);
+            openWards();
         } else if (id == R.id.aboutUsDrawerMenu) {
             updateNavigationView();
             navigationView.getMenu().findItem(R.id.aboutUsDrawerMenu).setChecked(true);
@@ -140,6 +155,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 
     public void showToast(String message){
