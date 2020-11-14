@@ -83,7 +83,7 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
     private void openPatients(String wardId) {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
-        fragmentTransaction.replace(R.id.fragmentContainerMain, new PatientsFragment(wardId)).addToBackStack("patients").commit();
+        fragmentTransaction.replace(R.id.fragmentContainerMain, new PatientsFragment(wardId), "patients").addToBackStack("wards").commit();
     }
 
     public void showToast(String message){

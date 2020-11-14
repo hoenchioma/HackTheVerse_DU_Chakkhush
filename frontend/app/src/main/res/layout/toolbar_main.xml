@@ -16,7 +16,7 @@
         android:weightSum="9">
 
         <Button
-            android:id="@+id/menuButtonToolbarUserMain"
+            android:id="@+id/menuButtonToolbarMain"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -26,7 +26,7 @@
             android:stateListAnimator="@null" />
 
         <TextView
-            android:id="@+id/fragmentTitleToolbarUserMain"
+            android:id="@+id/fragmentTitleToolbarMain"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"

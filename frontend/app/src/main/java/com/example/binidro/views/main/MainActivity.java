@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+    private TextView fragmentTitle;
     private Button menuButton;
     private NavigationView navigationView;
 
@@ -61,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbarMain);
-        menuButton = (Button) findViewById(R.id.menuButtonToolbarUserMain);
+        fragmentTitle = (TextView) findViewById(R.id.fragmentTitleToolbarMain);
+        menuButton = (Button) findViewById(R.id.menuButtonToolbarMain);
 
         // Navigation Drawer
         navigationView = (NavigationView) findViewById(R.id.navigationViewMain);
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void openWards(){
+        fragmentTitle.setText("Wards");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
         fragmentTransaction.replace(R.id.fragmentContainerMain, new WardsFragment(), "wards");
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void signOut() {
-        // TODO
+        // TODO - Implement Sign Out Method
     }
 
     @Override
@@ -178,6 +181,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(a);
             }
         } else {
+            String fragmentName = getSupportFragmentManager().getBackStackEntryAt(count-1).getName();
+            if(fragmentName.equals("wards")) {
+                fragmentTitle.setText("Wards");
+            } else if(fragmentName.equals("patients")) {
+                fragmentTitle.setText("Patients");
+            }
             getSupportFragmentManager().popBackStack();
         }
     }

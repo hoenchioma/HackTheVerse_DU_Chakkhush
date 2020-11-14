@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.binidro.R;
@@ -28,6 +29,7 @@ public class PatientsFragment extends Fragment implements PatientsAdapter.OnPati
     private PatientsAdapter patientsAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager recyclerViewLayoutManager;
+    private TextView fragmentTitle;
 
     private String wordId;
     private ArrayList<Sensor> sensors;
@@ -54,7 +56,7 @@ public class PatientsFragment extends Fragment implements PatientsAdapter.OnPati
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_patients, container, false);
 
-        showToast(wordId);
+//        showToast(wordId);
         findXmlElements(view);
         setUpRecyclerView();
         return view;
@@ -62,6 +64,8 @@ public class PatientsFragment extends Fragment implements PatientsAdapter.OnPati
 
     private void findXmlElements(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewPatients);
+        fragmentTitle = getActivity().findViewById(R.id.fragmentTitleToolbarMain);
+        fragmentTitle.setText("Patients");
     }
 
     private void setUpRecyclerView() {
