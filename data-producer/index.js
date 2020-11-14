@@ -13,7 +13,9 @@ app.listen(PORT, HOST, () => {
   console.log(`server running on port ${PORT}`)
 })
 
-cron.schedule("*/5 * * * * *", function () {
-  pushEvent([generateRandomData()]);
+cron.schedule("*/5 * * * * *", () => {
+  const randData = generateRandomData();
+  console.log(randData);
+  pushEvent(randData);
   // console.log('pushed event');
 });

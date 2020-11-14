@@ -5,7 +5,11 @@ const config = require('./config');
 const kafka_topic = config.kafka_topic;
 const kafka_server = config.kafka_server;
 
-pushEvent = (payloads) => {
+pushEvent = (val) => {
+  const payloads = [{
+    topic: kafka_topic,
+    messages: val,
+  }];
   let push_status = producer.send(payloads, (err, data) => {
     if (err) {
       console.log('[kafka-producer -> ' + kafka_topic + ']: broker update failed');

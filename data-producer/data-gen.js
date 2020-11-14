@@ -1,9 +1,15 @@
 const { v4: uuidv4 } = require('uuid');
 
-const PATIENT_NO = 1e4;
+const PATIENT_NO = 5;
 
-const patients = Array(PATIENT_NO).keys().map(() => uuidv4());
+const patients = [];
 const types = ['spo2', 'bp', 'heartRate'];
+
+function fillPatientArray() {
+  for (i = 0; i < PATIENT_NO; i++) {
+    patients.push(uuidv4());
+  }
+}
 
 /**
  * Returns a random number between min (inclusive) and max (exclusive)
@@ -37,13 +43,14 @@ function generateValue(type) {
 
 module.exports = {
   generateRandomData: () => {
-    const type = types[getRandomInt(0, types.length)];
+    const type = types[getRandomInt(0, types.length-1)];
     return {
-      patientId: patients[getRandomInt(0, PATIENT_NO)],
+      patientId: patients[getRandomInt(0, PATIENT_NO-1)],
       type, 
       value: generateValue(type),
       time: Date.now()
     };
-  }
-  
+  } 
 }
+
+fillPatientArray();
