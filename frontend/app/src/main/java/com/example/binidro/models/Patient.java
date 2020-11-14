@@ -17,6 +17,13 @@ public class Patient {
         this.sensors = sensors;
     }
 
+    public Patient(String id, String name, String disease, String sensors) {
+        this.id = id;
+        this.name = name;
+        this.disease = disease;
+        this.imageUrl = sensors;
+    }
+
     public String getId() {
         return id;
     }

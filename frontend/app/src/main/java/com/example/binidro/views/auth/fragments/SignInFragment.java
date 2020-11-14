@@ -111,6 +111,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onResponse(JSONObject response) {
                         Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                        intent.putExtra("userDetails", response.toString());
                         startActivity(intent);
                         getActivity().finish();
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
