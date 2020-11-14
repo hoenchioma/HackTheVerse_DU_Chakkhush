@@ -64,7 +64,7 @@ router.get('/confirmation/:token', async (req, res) => {
 /** 
  * Resend confirmation link by logging in
  * Query Parameters:
- * Body: Access token
+ * Body: token (Access token)
  * */
 router.post('/resendconfirmation', minuteLimiter, auth, async (req, res) => {
     const healthWorker = await HealthWorker.findById(req.healthWorker.id);

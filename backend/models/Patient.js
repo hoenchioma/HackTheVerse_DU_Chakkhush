@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const HealthWorkerSchema = new mongoose.Schema({
+const PatientSchame = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -13,6 +13,9 @@ const HealthWorkerSchema = new mongoose.Schema({
         min: 6,
         max: 255
     },
+    ward: {
+        type: String,
+    },
     sensors: {
         type: String,
         required: true,
@@ -21,4 +24,4 @@ const HealthWorkerSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('HealthWorker', HealthWorkerSchema);
+module.exports = mongoose.model('Patient', PatientSchame);
