@@ -2,7 +2,10 @@ html,
 body {
 	height: 100%;
 }
-
+h1{
+	margin: 2% auto 5%;
+	text-align: center;
+}
 body.my-login-page {
 	background-color: #f7f9fb;
 	font-size: 14px;
@@ -15,9 +18,19 @@ body.my-login-page {
 	/* font-family: 'Montserrat Subrayada', sans-serif; */
 	font-weight: 700;
 }
+.div-format{
+	margin: 1%, 5%, 2%;
+	padding: 5% 20% 3%;
+	text-align: center;
+}
 
 .patient-div {
 	margin: 1% 5% 2% 5%;
+}
+.piechart-padding{
+	margin-left: 10%;
+	margin-right: auto;
+	text-align: center;
 }
 
 .my-login-page .brand {

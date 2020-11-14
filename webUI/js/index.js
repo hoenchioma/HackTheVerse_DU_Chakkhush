@@ -75,4 +75,25 @@ $(function () {
 
 		});
 	});
+
+	google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+  
+        function drawChart() {
+  
+          var data = google.visualization.arrayToDataTable([
+            ['Ward Number', 'Critical Patients Number'],
+            ['Ward-1',  1],
+            ['Ward-1',  3],
+            ['Ward-1',  2]
+          ]);
+  
+          var options = {
+            title: 'Critical Patients'
+          };
+  
+          var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  
+          chart.draw(data, options);
+        }
 });
