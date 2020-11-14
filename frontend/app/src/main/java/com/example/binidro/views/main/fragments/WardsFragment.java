@@ -6,11 +6,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -23,6 +27,7 @@ import com.example.binidro.models.Patient;
 import com.example.binidro.models.Sensor;
 import com.example.binidro.models.Ward;
 import com.example.binidro.views.main.adapters.WardsAdapter;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +37,14 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
     private WardsAdapter wardsAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager recyclerViewLayoutManager;
+
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private TextView fragmentTitle;
+    private Button menuButton;
+    private NavigationView navigationView;
+    private TextView profileNameTextView;
+    private TextView profileEmailTextView;
 
     private ArrayList<Sensor> sensors;
     private ArrayList<Patient> patients;
@@ -64,12 +77,28 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
         View view = inflater.inflate(R.layout.fragment_wards, container, false);
 
         findXmlElements(view);
+        updateNavigationView();
         setUpRecyclerView();
         return view;
     }
 
     private void findXmlElements(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewWards);
+
+        // Parent Layout
+        drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawerLayoutMain);
+
+        // Toolbar
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbarMain);
+        fragmentTitle = (TextView) getActivity().findViewById(R.id.fragmentTitleToolbarMain);
+        menuButton = (Button) getActivity().findViewById(R.id.menuButtonToolbarMain);
+
+        // Navigation Drawer
+        navigationView = (NavigationView) getActivity().findViewById(R.id.navigationViewMain);
+        profileNameTextView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nameTextViewDrawerHeader);
+        profileEmailTextView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.emailTextViewDrawerHeader);
+
+        fragmentTitle.setText("Wards");
     }
 
     private void setUpRecyclerView() {
@@ -84,6 +113,12 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
         fragmentTransaction.replace(R.id.fragmentContainerMain, new PatientsFragment(wardId), "patients").addToBackStack("wards").commit();
+    }
+
+    private void updateNavigationView(){
+        navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(true);
+        navigationView.getMenu().findItem(R.id.aboutUsDrawerMenu).setChecked(false);
+        navigationView.getMenu().findItem(R.id.signOutDrawerMenu).setChecked(false);
     }
 
     public void showToast(String message){

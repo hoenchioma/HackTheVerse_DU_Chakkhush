@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView fragmentTitle;
     private Button menuButton;
     private NavigationView navigationView;
-
     private TextView profileNameTextView;
     private TextView profileEmailTextView;
 
@@ -89,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void openWards(){
-        fragmentTitle.setText("Wards");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
         fragmentTransaction.replace(R.id.fragmentContainerMain, new WardsFragment(), "wards");
@@ -184,8 +182,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String fragmentName = getSupportFragmentManager().getBackStackEntryAt(count-1).getName();
             if(fragmentName.equals("wards")) {
                 fragmentTitle.setText("Wards");
+                updateNavigationView();
+                navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(true);
             } else if(fragmentName.equals("patients")) {
                 fragmentTitle.setText("Patients");
+                updateNavigationView();
+            } else if(fragmentName.equals("sensors")) {
+                fragmentTitle.setText("Sensors");
+                updateNavigationView();
             }
             getSupportFragmentManager().popBackStack();
         }
