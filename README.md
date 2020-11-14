@@ -7,6 +7,7 @@
 # Contents
 
 - Contributors
+- Project Configuration
 - Problem Identification and Risk Analysis
 - Idea Formulation
 - Implementation Plan and Work Progress
@@ -34,9 +35,38 @@ Slack Channel: _h14_du_chakkhush
 
 <br/>
 
-# Problem Identification and Risk Analysis
+# Project Configuration
+
+**.env** (for node backend hint)
+
+```
+DB_CONNECT=mongodb+srv://admin:admin@cluster0.rcyit.mongodb.net/Cluster0?retryWrites=true&w=majority
+# node
+# require('crypto').randomBytes(64).toString('hex')
+ACCESS_TOKEN_SECRET = 
+REFRESH_TOKEN_SECRET = 
+EMAIL_TOKEN_SECRET = 
+ADMIN_TOKEN_SECRET =
+EMAIL =
+PASS = 
+```
+
+**Setting Up Kafka**
+
+[Download Kafka](https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz)
+
+Run Kafka:
+
+1. Run 
+```bin/zookeeper-server-start.sh config/zookeper.properties``` or  
+```bin/windows/zookeeper-server-start.bat config/zookeper.properties``` (windows)
+2. Run ```bin/kafka-server-start.sh config/server.properties``` or ```bin/windows/kafka-server-start.bat config/server.properties``` (windows)
+
+
 
 <br/>
+
+# Problem Identification and Risk Analysis
 
 ## Problem
 
