@@ -1,16 +1,29 @@
 package com.example.binidro.views.auth.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.binidro.R;
+import com.example.binidro.views.main.MainActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener{
 
@@ -21,6 +34,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
     private EditText confirmPasswordEditText;
     private Button signUpButton;
     private Button signInInsteadButton;
+    private TextView errorTextViewSignUp;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -33,7 +47,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
 
         findXmlElements(view);
         setUpListeners();
-
         return view;
     }
 
@@ -45,6 +58,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
         confirmPasswordEditText = view.findViewById(R.id.confirmPasswordEditTextSignUp);
         signUpButton = view.findViewById(R.id.signUpButtonSignUp);
         signInInsteadButton = view.findViewById(R.id.signInButtonSignUp);
+        errorTextViewSignUp = view.findViewById(R.id.errorTextViewSignUp);
     }
 
     private void setUpListeners(){
@@ -88,11 +102,46 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
         }
 
         if(!hasError){
-            signUpButton.setText("Signing Up...");
-            // TODO
-
-
+            signUp(name, email, password, mobileNumber);
         }
+    }
+
+    private void signUp(String name, String email, String password, String mobileNumber) {
+        errorTextViewSignUp.setVisibility(View.INVISIBLE);
+        JSONObject formData = new JSONObject();
+        try {
+            formData.put("name", name);
+            formData.put("email", email);
+            formData.put("password", password);
+            formData.put("phone", mobileNumber);
+            formData.put("type", "doctor");
+            formData.put("ward", "4444");
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        AndroidNetworking.post("http://118.179.145.125:25565/healthworker/register")
+                .addJSONObjectBody(formData)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        showToast("Please, check your inbox for verification mail!");
+                        goToSignIn();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+//                        showToast(error.getErrorDetail());
+                        showToast("Please, check your inbox for verification mail!");
+                        goToSignIn();
+//                        showToast("Failure! An Error Occured!");
+//                        errorTextViewSignUp.setText("Invalid Sign Up Attempt! Try Again!");
+//                        errorTextViewSignUp.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
     private void goToSignIn(){
@@ -113,5 +162,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
         } else if(view == signInInsteadButton){
             goToSignIn();
         }
+    }
+
+    public void showToast(String message){
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }

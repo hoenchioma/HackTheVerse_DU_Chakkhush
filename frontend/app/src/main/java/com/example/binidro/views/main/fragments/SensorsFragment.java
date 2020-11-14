@@ -55,8 +55,9 @@ public class SensorsFragment extends Fragment implements SensorsAdapter.OnSensor
 
         // TODO - Fetch Data
         sensors = new ArrayList<Sensor>();
-        sensors.add(new Sensor("1", "hello"));
-        sensors.add(new Sensor("2", "hell2"));
+        sensors.add(new Sensor("1", "SPO2"));
+        sensors.add(new Sensor("2", "BP"));
+        sensors.add(new Sensor("3", "Pulse"));
     }
 
     @Override

@@ -71,7 +71,7 @@ public class PatientsAdapter extends RecyclerView.Adapter<PatientsAdapter.Patien
         String name = patients.get(position).getName();
         String disease = patients.get(position).getDisease();
 
-        holder.patientName.setText(id + ". " + name);
+        holder.patientName.setText(name);
         holder.patientDisease.setText(disease);
     }
 
@@ -81,7 +81,7 @@ public class PatientsAdapter extends RecyclerView.Adapter<PatientsAdapter.Patien
         return patients == null ? 0 : patients.size();
     }
 
-    public interface OnPatientClickListener{
+    public interface OnPatientClickListener {
         void onPatientClick(int position);
     }
 }
