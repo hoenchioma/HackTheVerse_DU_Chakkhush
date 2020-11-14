@@ -7,11 +7,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,13 +24,20 @@ import android.widget.Toast;
 
 import com.example.binidro.R;
 import com.example.binidro.models.Ward;
+import com.example.binidro.views.auth.fragments.ForgotPasswordFragment;
+import com.example.binidro.views.auth.fragments.SignInFragment;
+import com.example.binidro.views.auth.fragments.SignUpFragment;
+import com.example.binidro.views.main.fragments.PatientsFragment;
 import com.example.binidro.views.main.fragments.WardsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+    private Boolean doubleBackToExitPressedOnce = false;
+
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+    private TextView fragmentTitle;
     private Button menuButton;
     private NavigationView navigationView;
 
@@ -53,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbarMain);
-        menuButton = (Button) findViewById(R.id.menuButtonToolbarUserMain);
+        fragmentTitle = (TextView) findViewById(R.id.fragmentTitleToolbarMain);
+        menuButton = (Button) findViewById(R.id.menuButtonToolbarMain);
 
         // Navigation Drawer
         navigationView = (NavigationView) findViewById(R.id.navigationViewMain);
@@ -75,8 +85,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        profileNameTextView.setText(CONSTANTS.getCurrentUser().getProperty("name").toString());
 //        profileEmailTextView.setText(CONSTANTS.getCurrentUser().getEmail());
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerMain, new WardsFragment()).commit();
+        openWards();
     }
+
+    public void openWards(){
+        fragmentTitle.setText("Wards");
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+        fragmentTransaction.replace(R.id.fragmentContainerMain, new WardsFragment(), "wards");
+        fragmentTransaction.commit();
+    }
+
 
     private void updateNavigationView(){
         navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(false);
@@ -85,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void signOut() {
-        // TODO
+        // TODO - Implement Sign Out Method
     }
 
     @Override
@@ -125,8 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.wardsDrawerMenu) {
             updateNavigationView();
             navigationView.getMenu().findItem(R.id.wardsDrawerMenu).setChecked(true);
-//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//            startActivity(intent);
+            openWards();
         } else if (id == R.id.aboutUsDrawerMenu) {
             updateNavigationView();
             navigationView.getMenu().findItem(R.id.aboutUsDrawerMenu).setChecked(true);
@@ -140,6 +158,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            if(!doubleBackToExitPressedOnce) {
+                this.doubleBackToExitPressedOnce = true;
+                showToast("Press Once Again to EXIT");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce=false;
+                    }
+                }, 2000);
+            }
+            else {
+                Intent a = new Intent(Intent.ACTION_MAIN);
+                a.addCategory(Intent.CATEGORY_HOME);
+                a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(a);
+            }
+        } else {
+            String fragmentName = getSupportFragmentManager().getBackStackEntryAt(count-1).getName();
+            if(fragmentName.equals("wards")) {
+                fragmentTitle.setText("Wards");
+            } else if(fragmentName.equals("patients")) {
+                fragmentTitle.setText("Patients");
+            }
+            getSupportFragmentManager().popBackStack();
+        }
     }
 
     public void showToast(String message){

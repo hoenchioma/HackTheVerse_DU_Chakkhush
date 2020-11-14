@@ -2,44 +2,44 @@ package com.example.binidro.views.main.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.binidro.R;
-import com.example.binidro.models.HealthWorker;
 import com.example.binidro.models.Patient;
 import com.example.binidro.models.Sensor;
-import com.example.binidro.models.Ward;
+import com.example.binidro.views.main.adapters.PatientsAdapter;
 import com.example.binidro.views.main.adapters.WardsAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickListener, View.OnClickListener{
+public class PatientsFragment extends Fragment implements PatientsAdapter.OnPatientClickListener, View.OnClickListener{
 
-    private WardsAdapter wardsAdapter;
+    private PatientsAdapter patientsAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager recyclerViewLayoutManager;
+    private TextView fragmentTitle;
 
+    private String wordId;
     private ArrayList<Sensor> sensors;
     private ArrayList<Patient> patients;
-    private ArrayList<HealthWorker> healthWorkers;
-    private ArrayList<Ward> wards;
 
-    public WardsFragment() {
+    public PatientsFragment(String wordId) {
         // Required empty public constructor
+
+        this.wordId = wordId;
+
         // TODO - Fetch Data
         sensors = new ArrayList<Sensor>();
         sensors.add(new Sensor("1", "hello"));
@@ -48,42 +48,32 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
         patients = new ArrayList<Patient>();
         patients.add(new Patient("1", "hello", "hello", "hello", sensors));
         patients.add(new Patient("2", "hello2", "hello2", "hello2", sensors));
-
-        healthWorkers = new ArrayList<HealthWorker>();
-        healthWorkers.add(new HealthWorker("1", "hello", "hello"));
-        healthWorkers.add(new HealthWorker("2", "hello2", "hello2"));
-
-        wards = new ArrayList<Ward>();
-        wards.add(new Ward("1", patients, healthWorkers));
-        wards.add(new Ward("2", patients, healthWorkers));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_wards, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_patients, container, false);
 
+//        showToast(wordId);
         findXmlElements(view);
         setUpRecyclerView();
         return view;
     }
 
     private void findXmlElements(View view) {
-        recyclerView = view.findViewById(R.id.recyclerViewWards);
+        recyclerView = view.findViewById(R.id.recyclerViewPatients);
+        fragmentTitle = getActivity().findViewById(R.id.fragmentTitleToolbarMain);
+        fragmentTitle.setText("Patients");
     }
 
     private void setUpRecyclerView() {
         recyclerViewLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 0));
-        wardsAdapter = new WardsAdapter(wards, getContext(), this);
-        recyclerView.setAdapter(wardsAdapter);
-    }
-
-    private void openPatients(String wardId) {
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
-        fragmentTransaction.replace(R.id.fragmentContainerMain, new PatientsFragment(wardId), "patients").addToBackStack("wards").commit();
+        patientsAdapter = new PatientsAdapter(patients, getContext(), this);
+        recyclerView.setAdapter(patientsAdapter);
     }
 
     public void showToast(String message){
@@ -93,9 +83,10 @@ public class WardsFragment extends Fragment implements WardsAdapter.OnWardClickL
     }
 
     @Override
-    public void onWardClick(int position) {
-        String wardId = wards.get(position).getId();
-        openPatients(wardId);
+    public void onPatientClick(int position) {
+//        Intent intent = new Intent(getContext(), BookDetailsActivity.class);
+//        intent.putExtra("selectedBook", CONSTANTS.bookListCached.get(position));
+//        startActivityForResult(intent, CONSTANTS.getIdBooklistadminBookdetails());
     }
 
     @Override
