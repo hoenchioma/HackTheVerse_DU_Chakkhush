@@ -29,7 +29,7 @@ var fonts = {
     }
   };
 
-const frontendUrl = 'http://localhost:3000/';
+const frontendUrl = 'http://118.179.145.125:25565/';
 
 // Route: /HealthWorker
 router.get('/', async (req, res) => {
@@ -75,7 +75,7 @@ router.post('/resendconfirmation', minuteLimiter, auth, async (req, res) => {
     sendMail(
         to=healthWorker.email,
         subject='Binidro Confirmation Mail',
-        html='Hello,<br> Please Click on the link to verify your email.<br><a href='+ frontendUrl + 'response/' + token + '>Click here to verify</a>'
+        html='Hello,<br> Please Click on the link to verify your email.<br><a href='+ frontendUrl + 'confirmation/' + token + '>Click here to verify</a>'
     );
     res.send('Email successfully sent');    
 })

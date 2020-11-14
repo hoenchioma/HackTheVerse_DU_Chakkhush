@@ -8,6 +8,7 @@ const app = express();
 
 // Import Routes
 const authRoute = require('./routes/auth');
+const patientRoute = require('./routes/patient');
 
 // Middlewares
 app.use(cors());
@@ -15,7 +16,8 @@ app.options('*', cors());
 app.use(bodyParser.json());
 
 // Route Middlewares
-app.use('/healthworker', authRoute)
+app.use('/healthworker', authRoute);
+app.use('/patients', patientRoute);
 
 // Routes
 app.get('/', (req, res) => {
