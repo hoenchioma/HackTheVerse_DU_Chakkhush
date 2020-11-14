@@ -29,8 +29,14 @@ import com.example.binidro.views.auth.fragments.SignInFragment;
 import com.example.binidro.views.auth.fragments.SignUpFragment;
 import com.example.binidro.views.main.fragments.PatientsFragment;
 import com.example.binidro.views.main.fragments.WardsFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private Boolean doubleBackToExitPressedOnce = false;
@@ -53,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findXmlElements();
         setUpListeners();
         initializeUI();
+        initializeFcm();
     }
 
     public void findXmlElements(){
@@ -85,6 +92,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        profileEmailTextView.setText(CONSTANTS.getCurrentUser().getEmail());
 
         openWards();
+    }
+
+    public void initializeFcm(){
+        FirebaseMessaging.getInstance().subscribeToTopic("general")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Done";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed";
+                        }
+                    }
+                });
     }
 
     public void openWards(){
