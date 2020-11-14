@@ -66,7 +66,6 @@ public class SensorsFragment extends Fragment implements SensorsAdapter.OnSensor
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sensors, container, false);
 
-        showToast(patientDisease);
         findXmlElements(view);
         setUpRecyclerView();
         return view;
