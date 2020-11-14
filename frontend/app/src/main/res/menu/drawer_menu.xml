@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/top_drawer">
+        <item
+            android:id="@+id/wardsDrawerMenu"
+            android:icon="@drawable/ic_home"
+            android:title="Wards"/>
+    </group>
+
+    <group android:id="@+id/middle_drawer">
+        <item
+            android:id="@+id/aboutUsDrawerMenu"
+            android:icon="@drawable/ic_about_us"
+            android:title="About Us"/>
+    </group>
+
+    <group android:id="@+id/bottom_drawer">
+        <item
+            android:id="@+id/signOutDrawerMenu"
+            android:icon="@drawable/ic_sign_out"
+            android:title="Sign Out"/>
+    </group>
+
+</menu>

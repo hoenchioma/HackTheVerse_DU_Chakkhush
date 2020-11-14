@@ -1,22 +1,21 @@
-package com.example.binidro.views.auth.fragment;
+package com.example.binidro.views.auth.fragments;
 
-import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.binidro.R;
+import com.example.binidro.views.auth.AuthActivity;
+import com.example.binidro.views.main.MainActivity;
+import com.example.binidro.views.welcome.WelcomeActivity;
 
 public class SignInFragment extends Fragment implements View.OnClickListener{
 
@@ -75,6 +74,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
                 final String password = passwordEditText.getText().toString();
 
                 // TODO
+
+
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         }
     }

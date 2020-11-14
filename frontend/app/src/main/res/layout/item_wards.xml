@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="10dp"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:longClickable="true"
+    android:gravity="center_vertical"
+    android:elevation="6dp"
+    android:outlineAmbientShadowColor="@color/colorSecondaryDark"
+    android:outlineSpotShadowColor="@color/colorSecondaryDark"
+    android:outlineProvider="background"
+    android:background="@drawable/background_shape_item"
+    android:layout_marginHorizontal="20dp"
+    android:paddingHorizontal="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.5"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/idTextViewItemWards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Ward Id"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:layout_gravity="center"
+            android:layout_weight="5.5"
+            android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/patientCountTextViewItemWards"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Patients: 5"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="14sp"
+                            android:textStyle="normal" />
+
+                        <TextView
+                            android:id="@+id/healthWorkersCountTextViewItemWards"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Health Worker: 3"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="14sp"
+                            android:textStyle="normal" />
+
+                </LinearLayout>
+
+        </LinearLayout>
+
+</LinearLayout>
