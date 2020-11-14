@@ -102,10 +102,10 @@ public class PatientsFragment extends Fragment implements PatientsAdapter.OnPati
         recyclerView.setAdapter(patientsAdapter);
     }
 
-    private void openSensors(String wardId, String patientId) {
+    private void openSensors(String wardId, String patientId, String patientName, String patientDisease) {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
-        fragmentTransaction.replace(R.id.fragmentContainerMain, new SensorsFragment(wardId, patientId), "sensors").addToBackStack("patients").commit();
+        fragmentTransaction.replace(R.id.fragmentContainerMain, new SensorsFragment(wardId, patientId, patientName, patientDisease), "sensors").addToBackStack("patients").commit();
     }
 
     private void updateNavigationView(){
@@ -123,7 +123,10 @@ public class PatientsFragment extends Fragment implements PatientsAdapter.OnPati
     @Override
     public void onPatientClick(int position) {
         String patientId = patients.get(position).getId();
-        openSensors(this.wordId, patientId);
+        String patientName = patients.get(position).getName();
+        String patientDisease = patients.get(position).getDisease();
+
+        openSensors(this.wordId, patientId, patientName, patientDisease);
     }
 
     @Override

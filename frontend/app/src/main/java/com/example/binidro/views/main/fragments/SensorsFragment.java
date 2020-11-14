@@ -29,6 +29,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SensorsFragment extends Fragment implements SensorsAdapter.OnSensorClickListener, View.OnClickListener{
 
@@ -36,15 +37,21 @@ public class SensorsFragment extends Fragment implements SensorsAdapter.OnSensor
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager recyclerViewLayoutManager;
     private TextView fragmentTitle;
+    private TextView patientNameTextView;
+    private TextView patientDiseaseTextView;
 
     private String wordId;
     private String patientId;
+    private String patientName;
+    private String patientDisease;
     private ArrayList<Sensor> sensors;
 
-    public SensorsFragment(String wordId, String patientId) {
+    public SensorsFragment(String wordId, String patientId, String patientName, String patientDisease) {
         // Required empty public constructor
         this.wordId = wordId;
         this.patientId = patientId;
+        this.patientName = patientName;
+        this.patientDisease = patientDisease;
 
         // TODO - Fetch Data
         sensors = new ArrayList<Sensor>();
@@ -58,6 +65,7 @@ public class SensorsFragment extends Fragment implements SensorsAdapter.OnSensor
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sensors, container, false);
 
+        showToast(patientDisease);
         findXmlElements(view);
         setUpRecyclerView();
         return view;
@@ -65,7 +73,12 @@ public class SensorsFragment extends Fragment implements SensorsAdapter.OnSensor
 
     private void findXmlElements(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewSensors);
-        fragmentTitle = getActivity().findViewById(R.id.fragmentTitleToolbarMain);
+        patientNameTextView = view.findViewById(R.id.patientNameSensors);
+        patientDiseaseTextView = view.findViewById(R.id.patientDiseaseSensors);
+        fragmentTitle = Objects.requireNonNull(getActivity()).findViewById(R.id.fragmentTitleToolbarMain);
+
+        patientNameTextView.setText(patientName);
+        patientDiseaseTextView.setText(patientDisease);
         fragmentTitle.setText("Sensors");
     }
 
