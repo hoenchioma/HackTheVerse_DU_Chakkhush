@@ -99,3 +99,8 @@ body.my-login-page {
 		padding: 15px;
 	}
 }
+
+.ward:hover{
+	background-color: #888;
+}
+
