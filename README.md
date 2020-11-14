@@ -80,16 +80,16 @@ Android application is 80% complete. Some of the data visualization aspects are 
 
 ## Use Case
 
-<img  src="assets/UseCase.jpg"/>
+<img  src="assets/diagrams/UseCase.jpg"/>
 
 ## Activity Diagram
 
-<img  src="assets/ActivityDiagram.jpg"/>
+<img  src="assets/diagrams/ActivityDiagram.jpg"/>
 
 ## Data Flow Diagram
 
-<img  src="assets/DataFlowDiagram.jpg"/>
+<img  src="assets/diagrams/DataFlowDiagram.jpg"/>
 
 ## Architecture Diagram
 
-<img  src="assets/ArchitectureDiagram.jpg"/>
+<img  src="assets/diagrams/ArchitectureDiagram.jpg"/>
