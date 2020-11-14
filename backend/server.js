@@ -31,5 +31,13 @@ mongoose.connect(process.env.DB_CONNECT,{
     w: "majority"},
 () => console.log("Connected to DB"));
 
+
+const { setupConsumer } = require('./kafka-consumer');
+// setup kafka consumer
+setupConsumer();
+
+const HOST = process.env.HOST || '0.0.0.0';
+const PORT = process.env.PORT || 25565;
+
 //Boot server
-app.listen(25565, "0.0.0.0", (req, res) => { console.log("Server Started") });
+app.listen(PORT, HOST, (req, res) => { console.log("Server Started") });

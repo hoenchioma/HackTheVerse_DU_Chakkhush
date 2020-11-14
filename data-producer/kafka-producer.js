@@ -1,27 +1,28 @@
 const kafka = require('kafka-node');
 const bp = require('body-parser');
-const config = require('./config');
 
-const kafka_topic = config.kafka_topic;
-const kafka_server = config.kafka_server;
+require('dotenv').config()
+const kafkaTopic = process.env.KAFKA_TOPIC;
+const kafkaServer = process.env.KAFKA_SERVER;
 
+// push val as event to the kafkaTopic topic
 pushEvent = (val) => {
   const payloads = [{
-    topic: kafka_topic,
+    topic: kafkaTopic,
     messages: val,
   }];
   let push_status = producer.send(payloads, (err, data) => {
     if (err) {
-      console.log('[kafka-producer -> ' + kafka_topic + ']: broker update failed');
+      console.log('[kafka-producer -> ' + kafkaTopic + ']: broker update failed');
     } else {
-      console.log('[kafka-producer -> ' + kafka_topic + ']: broker update success');
+      console.log('[kafka-producer -> ' + kafkaTopic + ']: broker update success');
     }
   });
 }
 
 try {
   const Producer = kafka.Producer;
-  const client = new kafka.KafkaClient(kafka_server);
+  const client = new kafka.KafkaClient(kafkaServer);
   var producer = new Producer(client);
   producer.on('ready', async function () {
     console.log('producer ready');
@@ -29,11 +30,10 @@ try {
 
   producer.on('error', function (err) {
     console.log(err);
-    console.log('[kafka-producer -> ' + kafka_topic + ']: connection errored');
+    console.log('[kafka-producer -> ' + kafkaTopic + ']: connection errored');
     throw err;
   });
 }
-
 catch (e) {
   console.log(e);
 }

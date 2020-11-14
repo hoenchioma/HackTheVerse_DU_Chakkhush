@@ -27,6 +27,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// generate random value given type
 function generateValue(type) {
   switch(type) {
     case 'spo2':
@@ -42,6 +43,7 @@ function generateValue(type) {
 }
 
 module.exports = {
+  // generate random data point
   generateRandomData: () => {
     const type = types[getRandomInt(0, types.length-1)];
     return {
