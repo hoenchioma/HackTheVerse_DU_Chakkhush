@@ -1,6 +1,7 @@
 package com.example.binidro.views.main.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -21,6 +22,11 @@ import com.example.binidro.models.Patient;
 import com.example.binidro.models.Sensor;
 import com.example.binidro.views.main.adapters.PatientsAdapter;
 import com.example.binidro.views.main.adapters.SensorsAdapter;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 
@@ -56,7 +62,6 @@ public class SensorsFragment extends Fragment implements SensorsAdapter.OnSensor
         setUpRecyclerView();
         return view;
     }
-
 
     private void findXmlElements(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewSensors);

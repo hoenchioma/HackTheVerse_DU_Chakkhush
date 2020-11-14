@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="250dp"
     android:layout_marginVertical="10dp"
     android:orientation="vertical"
     android:clickable="true"
@@ -17,6 +17,7 @@
     android:paddingHorizontal="10dp">
 
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -33,9 +34,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:text="Sensor Name"
-                            android:textColor="@color/secondary_text"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="normal" />
 
                 </LinearLayout>
 
@@ -50,7 +51,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:gravity="right"
                             android:orientation="vertical">
 
                                 <TextView
@@ -59,9 +60,9 @@
                                     android:layout_height="wrap_content"
                                     android:textAlignment="center"
                                     android:text="92 BPS"
-                                    android:textColor="@color/secondary_text"
+                                    android:textColor="@color/colorPrimary"
                                     android:textSize="14sp"
-                                    android:textStyle="normal" />
+                                    android:textStyle="bold" />
 
                         </LinearLayout>
 
@@ -71,12 +72,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp">
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/lineChartItemSensors"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                 </com.github.mikephil.charting.charts.LineChart>
 
