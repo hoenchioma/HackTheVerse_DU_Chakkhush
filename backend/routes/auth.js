@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
 
 /** 
  * Confirm via confirmation link
- * Query Parameters: token
+ * URL Parameters: token
  * */
 router.get('/confirmation/:token', async (req, res) => {
     try{
