@@ -2,20 +2,29 @@ package com.example.binidro.views.auth.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.binidro.R;
 import com.example.binidro.views.auth.AuthActivity;
 import com.example.binidro.views.main.MainActivity;
 import com.example.binidro.views.welcome.WelcomeActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SignInFragment extends Fragment implements View.OnClickListener{
 
@@ -41,6 +50,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
 
         findXmlElements(view);
         setUpListeners();
+        initializeAndroidNetworkingLibrary();
         return view;
     }
 
@@ -59,6 +69,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
         forgotPasswordButton.setOnClickListener(this);
     }
 
+    public void initializeAndroidNetworkingLibrary() {
+        // Adding an Network Interceptor for Debugging purpose :
+        AndroidNetworking.initialize(getActivity().getApplicationContext());
+    }
+
     private void handleSignIn(){
         errorTextViewSignIn.setVisibility(View.GONE);
         emailEditText.setError(null);
@@ -72,16 +87,40 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
             else {
                 final String email = emailEditText.getText().toString().toLowerCase();
                 final String password = passwordEditText.getText().toString();
-
-                // TODO
-
-
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                signIn(email, password);
             }
         }
+    }
+
+    private void signIn(String email, String password) {
+        errorTextViewSignIn.setVisibility(View.INVISIBLE);
+        JSONObject formData = new JSONObject();
+        try {
+            formData.put("email", email);
+            formData.put("password", password);
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        AndroidNetworking.post("http://118.179.145.125:25565/healthworker/login")
+                .addJSONObjectBody(formData)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                        errorTextViewSignIn.setText("Invalid Sign In Attempt! Try Again!");
+                        errorTextViewSignIn.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
     boolean isEmailValid(CharSequence email) {
@@ -121,5 +160,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
             fragmentTransaction.replace(R.id.fragmentContainerAuth, new ForgotPasswordFragment(), "forgotPassword");
             fragmentTransaction.commit();
         }
+    }
+
+    public void showToast(String message){
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }

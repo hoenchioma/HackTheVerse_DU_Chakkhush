@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
 import com.example.binidro.R;
 import com.example.binidro.models.Ward;
 import com.example.binidro.views.auth.fragments.ForgotPasswordFragment;
@@ -37,6 +38,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
+import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private Boolean doubleBackToExitPressedOnce = false;
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setUpListeners();
         initializeUI();
         initializeFcm();
+        initializeAndroidNetworkingLibrary();
     }
 
     public void findXmlElements(){
@@ -105,6 +109,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 });
+    }
+
+    public void initializeAndroidNetworkingLibrary() {
+        // Adding an Network Interceptor for Debugging purpose :
+        AndroidNetworking.initialize(getApplicationContext());
     }
 
     public void openWards(){

@@ -204,6 +204,17 @@
         android:paddingHorizontal="32dp"
         android:paddingVertical="20dp">
 
+        <TextView
+            android:id="@+id/errorTextViewSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Incorrect Email or Password"
+            android:textColor="#dd0000"
+            android:textSize="11sp"
+            android:textAlignment="center"
+            android:padding="20px"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/signUpButtonSignUp"
             style="?android:attr/borderlessButtonStyle"
