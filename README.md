@@ -15,6 +15,7 @@
     - Activity Diagram
     - Data Flow Diagram
     - Architecture Diagram
+- Project Configuration
 
 <br/>
 
@@ -35,8 +36,6 @@ Slack Channel: _h14_du_chakkhush
 <br/>
 
 # Problem Identification and Risk Analysis
-
-<br/>
 
 ## Problem
 
@@ -67,6 +66,7 @@ If we assume for the sake of this project the hospital emits it’s sensor data 
 Moreover, doctors can at a glance view the condition of all his patients. Hospital staff can also use statistical data to redistribute their staff based on need. 
 
 <br/>
+<br/>
 
 # Implementation Plan and Work Progress
 
@@ -80,16 +80,58 @@ Android application is 80% complete. Some of the data visualization aspects are 
 
 ## Use Case
 
-<img  src="assets/UseCase.jpg"/>
+<img  src="assets/diagrams/UseCase.jpg"/>
+
+<br/>
+<br/>
 
 ## Activity Diagram
 
-<img  src="assets/ActivityDiagram.jpg"/>
+<img  src="assets/diagrams/ActivityDiagram.jpg"/>
+
+<br/>
+<br/>
 
 ## Data Flow Diagram
 
-<img  src="assets/DataFlowDiagram.jpg"/>
+<img  src="assets/diagrams/DataFlowDiagram.jpg"/>
+
+<br/>
+<br/>
 
 ## Architecture Diagram
 
-<img  src="assets/ArchitectureDiagram.jpg"/>
+<img  src="assets/diagrams/ArchitectureDiagram.jpg"/>
+
+
+<br/>
+<br/>
+<br/>
+
+# Project Configuration
+
+**.env** (for node backend hint)
+
+```
+DB_CONNECT=
+# node
+# require('crypto').randomBytes(64).toString('hex')
+ACCESS_TOKEN_SECRET = 
+REFRESH_TOKEN_SECRET = 
+EMAIL_TOKEN_SECRET = 
+ADMIN_TOKEN_SECRET =
+EMAIL =
+PASS = 
+```
+
+**Setting Up Kafka**
+
+[Download Kafka](https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz)
+
+Run Kafka:
+
+1. Run 
+```bin/zookeeper-server-start.sh config/zookeper.properties``` or  
+```bin/windows/zookeeper-server-start.bat config/zookeper.properties``` (windows)
+2. Run ```bin/kafka-server-start.sh config/server.properties``` or ```bin/windows/kafka-server-start.bat config/server.properties``` (windows)
+
