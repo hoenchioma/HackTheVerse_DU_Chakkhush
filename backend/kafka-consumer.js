@@ -4,6 +4,47 @@ const bp = require('body-parser');
 const kafkaServer = process.env.KAFKA_SERVER;
 const kafkaTopic = process.env.KAFKA_TOPIC;
 
+const MAX_QUEUE_SIZE = 20;
+
+// simple queue data structure
+class Queue {
+  constructor() {
+    this.items = []
+  }
+  enqueue(element) {
+    this.items.push(element);
+  }
+  dequeue() {
+    if (this.isEmpty()) throw "Underflow";
+    return this.items.shift();
+  }
+  front() {
+    if (this.isEmpty()) throw "No elements in Queue";
+    return this.items[0];
+  }
+  size() {
+    return this.items.length;
+  }
+  isEmpty() {
+    return this.items.length == 0;
+  }
+}
+
+const sensorData = new Map();
+
+function addData({ patientId, type, value }) {
+  const queue = sensorData.get([patientId, type]);
+  if (!queue) { // queue not present create one
+    queue = new Queue();
+    sensorData.set([patientId, type], queue);
+  }
+  queue.enqueue(value);
+  // if size of queue exceeds max
+  if (queue.size() > MAX_QUEUE_SIZE) {
+    queue.dequeue();
+  }
+}
+
 module.exports = {
   setupConsumer: () => {
     try {
@@ -22,6 +63,7 @@ module.exports = {
       consumer.on('message', function (message) {
         const data = JSON.parse(message.value);
         // TODO: do stuff with consumed data
+        addData(data);
         console.log(message);
       });
 
