@@ -24,9 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.binidro.R;
 import com.example.binidro.models.Patient;
 import com.example.binidro.models.Ward;
+import com.example.binidro.views.auth.AuthActivity;
 import com.example.binidro.views.auth.fragments.ForgotPasswordFragment;
 import com.example.binidro.views.auth.fragments.SignInFragment;
 import com.example.binidro.views.auth.fragments.SignUpFragment;
@@ -172,7 +176,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void signOut() {
-        // TODO - Implement Sign Out Method
+        AndroidNetworking.post("http://118.179.145.125:25565/healthworker/logout")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                        if(error.getErrorDetail().equals("parseError")){
+                            Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+                            startActivity(intent);
+                            finish();
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        }
+                        else {
+                            showToast("Error Occured! Try Again!");
+                        }
+                    }
+                });
     }
 
     @Override
