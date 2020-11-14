@@ -28,6 +28,12 @@ const HealthWorkerSchema = new mongoose.Schema({
         required: true,
         max: 14,
         min: 10
+    },
+    type: {
+        type: String // Doctor or Nurse
+    },
+    ward: {
+        type: String
     }
 });
 

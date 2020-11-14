@@ -34,14 +34,17 @@ const frontendUrl = 'http://localhost:3000/';
 // Route: /HealthWorker
 router.get('/', async (req, res) => {
     try{
-        res.send("Working");
+
     } catch(err) {
         console.log(err)
         return res.status(400).send(err);
     }
 })
 
-// Confirm via confirmation link
+/** 
+ * Confirm via confirmation link
+ * Query Parameters: token
+ * */
 router.get('/confirmation/:token', async (req, res) => {
     try{
         const token = jwt.verify(req.params.token, process.env.EMAIL_TOKEN_SECRET);
@@ -58,6 +61,11 @@ router.get('/confirmation/:token', async (req, res) => {
     
 })
 
+/** 
+ * Resend confirmation link by logging in
+ * Query Parameters:
+ * Body: Access token
+ * */
 router.post('/resendconfirmation', minuteLimiter, auth, async (req, res) => {
     const healthWorker = await HealthWorker.findById(req.healthWorker.id);
     const token = jwt.sign({ id: req.healthWorker.id },
@@ -66,12 +74,17 @@ router.post('/resendconfirmation', minuteLimiter, auth, async (req, res) => {
     );
     sendMail(
         to=healthWorker.email,
-        subject='Nilkhetian Confirmation Mail',
+        subject='Binidro Confirmation Mail',
         html='Hello,<br> Please Click on the link to verify your email.<br><a href='+ frontendUrl + 'response/' + token + '>Click here to verify</a>'
     );
     res.send('Email successfully sent');    
 })
 
+/** 
+ * Send mail with one time reset password token
+ * Query Parameters:
+ * Body: email
+ * */
 router.post('/resetpassword', minuteLimiter, async (req, res) => {
     if(!req.body.email) return res.status(401).send("Invalid Email");
     const email = req.body.email;
@@ -96,6 +109,11 @@ router.post('/resetpassword', minuteLimiter, async (req, res) => {
     res.send("Recovery mail sent");
 })
 
+/** 
+ * Reset password using onetime token
+ * Query Parameters:
+ * Body: email
+ * */
 router.post('/resetpassword/:token', async (req, res) => {
     try{
         const token = req.params.token;
@@ -125,6 +143,11 @@ router.post('/resetpassword/:token', async (req, res) => {
     }
 })
 
+/** 
+ * Reset password using onetime token
+ * Query Parameters:
+ * Body: email
+ * */
 router.post('/register', async (req, res) => {
     // Validation
     const {error} = registrationValidation(req.body);
@@ -144,7 +167,9 @@ router.post('/register', async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         phone: req.body.phone,
-        confirmed: false
+        confirmed: false,
+        type: healthWorker.type,
+        ward: healthWorker.ward
     })
     try {
         const savedHealthWorker = await healthWorker.save();
@@ -163,6 +188,11 @@ router.post('/register', async (req, res) => {
     }
 })
 
+/** 
+ * Login using email and password
+ * Query Parameters:
+ * Body: email, password
+ * */
 router.post('/login', async (req, res) => {
     // Login Validation
     const {error} = loginValidation(req.body);
@@ -181,10 +211,16 @@ router.post('/login', async (req, res) => {
         name: healthWorker.name, 
         email: healthWorker.email,
         phone: healthWorker.phone,
-        confirmed: healthWorker.confirmed
+        confirmed: healthWorker.confirmed,
+        type: healthWorker.type,
+        ward: healthWorker.ward
     });
 })
 
+/** 
+ * Logout
+ * Body: token
+ * */
 router.post('/logout', async (req, res) => {
     try{
         deleteTokens(req.body.token);
@@ -194,12 +230,18 @@ router.post('/logout', async (req, res) => {
     }
 })
 
+/** 
+ * Update profile
+ * Body: name, phone, type, ward, password
+ * */
 router.patch('/', auth, async (req, res) => {
     var setObject = {};
     
     // Fill default fields
     setObject.name = req.body.name;
     setObject.phone = req.body.phone;
+    setObject.type = req.body.type;
+    setObject.ward = req.body.ward;
     
     // Get health worker from database
     const healthWorker = await HealthWorker.findById(req.healthWorker.id);
