@@ -15,12 +15,6 @@ const PatientSchame = new mongoose.Schema({
     },
     ward: {
         type: String,
-    },
-    sensors: {
-        type: String,
-        required: true,
-        max: 1024,
-        min: 6
     }
 });
 

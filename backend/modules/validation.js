@@ -7,6 +7,8 @@ const registrationValidation = (data) => {
         email: Joi.string().required().email(),
         password: Joi.string().min(6).required(),
         phone: Joi.string().min(11).max(14).pattern(/^(\+88)?(01[3-9]{1}\d{8}$)/).required(),
+        type: Joi.string(),
+        ward: Joi.string()
     });
 
     // Validate User
