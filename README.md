@@ -4,6 +4,8 @@
 </p>
 <h1 align="center">Binidro</h1>
 
+Please see `Project Configuration` part to see how to use/run the project.
+
 # Contents
 
 - Contributors
@@ -110,7 +112,18 @@ Android application is 80% complete. Some of the data visualization aspects are 
 
 # Project Configuration
 
-**.env** (for node backend hint)
+The Project consists of 2 main parts. The `backend` folder contains the `nodejs` server backend for the application. This can be run using `npm start`. On the other hand the `frontend` folder contains the Android project for the frontend application.
+The `data-producer` contains a server which generates dummy data for our backend to consume. It is also a `nodejs` server and can be run using `npm start`. Note Apacke Kafka has to be running and the environment variables `KAFKA_SERVER` and `KAFKA_TOPIC` has to be set. The env variables `KAFKA_SERVER` and `KAFKA_TOPIC` are also needed by the `backend` server for the kafka consumer.
+
+**.env** (for data-producer)
+```
+HOST=
+PORT=
+KAFKA_SERVER=
+KAFKA_TOPIC=
+```
+
+**.env** (for node backend)
 
 ```
 DB_CONNECT=
@@ -122,6 +135,8 @@ EMAIL_TOKEN_SECRET =
 ADMIN_TOKEN_SECRET =
 EMAIL =
 PASS = 
+KAFKA_SERVER=
+KAFKA_TOPIC=
 ```
 
 **Setting Up Kafka**
