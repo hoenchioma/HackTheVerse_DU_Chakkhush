@@ -1,0 +1,25 @@
+{
+  "name": "data-producer",
+  "version": "1.0.0",
+  "description": "Dummy sensor data generator",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "nodemon ./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "kafka-node": "^5.0.0",
+    "node-cron": "^2.0.3",
+    "uuid": "^8.3.1"
+  }
+}
